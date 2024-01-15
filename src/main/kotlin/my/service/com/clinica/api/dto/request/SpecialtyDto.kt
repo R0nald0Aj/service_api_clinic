@@ -9,7 +9,13 @@ data class SpecialtyDto(
     val doctorList: List<Doctor>,
     @field:NotBlank(message = "description can´t be empty")
     val description :String
-)
+){
+    constructor(specialtyEntity: SpecialtyEntity):this(
+        name = specialtyEntity.name,
+        doctorList =specialtyEntity.doctorList,
+        description = specialtyEntity.description
+    )
+}
 
 fun SpecialtyDto.toSpecialtyEntity()= SpecialtyEntity(
     name = this.name,

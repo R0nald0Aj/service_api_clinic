@@ -7,7 +7,12 @@ data class DateConsultationDto(
     @field:Past(message = "this date is not avalible")
     val date : LocalDate,
     val isAvailableDate :Boolean,
-)
+){
+    constructor(dateConsultations: DateConsultations):this(
+        date = dateConsultations.date,
+        isAvailableDate =dateConsultations.isAvailableDate
+    )
+}
 
 fun DateConsultationDto.toDateConsultation() = DateConsultations(
     date = this.date,

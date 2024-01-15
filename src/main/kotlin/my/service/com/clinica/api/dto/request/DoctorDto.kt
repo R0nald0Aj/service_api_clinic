@@ -13,7 +13,16 @@ data class DoctorDto(
     val available: Boolean = false,
     val specialtyEntity : Long,
     val dateConsultations : List<DateConsultations>
-)
+){
+    constructor(doctor: Doctor):this(
+        name = doctor.name,
+        crm = doctor.crm,
+        imageUrl = doctor.imageUrl,
+        available =doctor.available,
+        specialtyEntity = doctor.specialtyEntity?.id!!,
+        dateConsultations = doctor.dateConsultations
+    )
+}
 
 fun DoctorDto.toDoctorEntity() = Doctor(
     name = this.name,
