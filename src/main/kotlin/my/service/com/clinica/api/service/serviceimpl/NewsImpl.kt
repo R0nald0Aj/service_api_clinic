@@ -21,11 +21,35 @@ class NewsImpl(private val newsRepository: NewsRepository) : INewsService {
          }
     }
 
-    override fun delete(id: Long) {
-        TODO("Not yet implemented")
+    override fun findNewsById(id: Long) :News{
+           val news  = newsRepository.findById(id).orElseThrow {
+                  throw Exception("Noticias não encontrada com o id $id")
+              }
+
+         return news
     }
 
-    override fun update(news: News): News {
-        TODO("Not yet implemented")
+    override fun delete(id: Long) {
+       try {
+           val news = findNewsById(id)
+           newsRepository.deleteById(news.id!!)
+
+       }catch (exeption:Exception){
+           throw exeption;
+       }
+    }
+
+    override fun update(news: News,id: Long): News {
+        try {
+         val newUpdate = findNewsById(id).copy(
+                id = id,
+                about = news.about,
+                text = news.text,
+                title =  news.title
+            )
+          return  newsRepository.save(newUpdate)
+        }catch (exe : Exception){
+            throw exe
+        }
     }
 }
